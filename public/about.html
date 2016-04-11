@@ -3,10 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>About</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    html {
+      font-size: 16px;
+      font-family: garamond;
+      font-weight: 300;
+      line-height: 1.2 rem;
+      color: rgb(236, 232, 235);
+    }
+    .flex-container {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+      align-content: space-around;
+    }
+    .main {
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+      padding: 1.25em;
+      background-color: rgba(82, 9, 187, 0.8);
+    }
+    img {
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 3em;
+      font-weight: 600;
+      margin: 1.25em 0;
+      align-self: flex-start;
+    }
+    h4 {
+      font-size: 1.5em;
+      font-weight: 400;
+      margin: 1.25em 0;
+      align-self: flex-start;
+    }
+  </style>  
 </head>
 <body>
-  <div>
-    <p>This is about something.</p>
+  <div class="flex-container">
+    <div class="main">
+      <h1>About Us</h1>
+      <h4>Looking for information? You're in the right spot.</h4>
+    </div>
   </div>
 </body>
 </html>

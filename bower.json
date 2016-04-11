@@ -1,0 +1,25 @@
+{
+  "name": "itc298",
+  "description": "test project",
+  "main": "index.js",
+  "authors": [
+    "Blake Schwartz"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "node"
+  ],
+  "homepage": "https://github.com/bschwartz757/itc298-s16",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
