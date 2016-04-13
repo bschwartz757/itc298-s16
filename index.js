@@ -1,3 +1,4 @@
+//STATIC HTTP - OLD DON'T USE
 var http = require('http'),
 fs = require('fs');
 
