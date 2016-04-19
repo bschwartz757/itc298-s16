@@ -12,13 +12,12 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // POST http://localhost:3000/api/users
 // parameters sent with
-app.post('/api/users', function(req, res){
-  var user_id = req.body.id;
-  var token = req.body.token;
-  var geo = req.body.geo;
-
-  res.send(user_id + ' ' + token + ' ' + geo);
-});
+// app.post('/api/users', function(req, res){
+//   var user_id = req.body.id;
+//   var token = req.body.token;
+//   var geo = req.body.geo;
+//   res.send(user_id + ' ' + token + ' ' + geo);
+// });
 
 //set up handlebars view engine
 var handlebars = require('express-handlebars')
@@ -47,9 +46,13 @@ app.get('/about', function(req, res){
   res.render('about', {fortune: fortune.getFortune()});
 });
 
-app.get('/search', function(req, res){
-  res.json('home', {books: books.getBooks()});
-})
+app.get('/books', function(req, res){
+  res.render('books');
+});
+
+app.post('/search', function(req, res){
+  res.redirect("/thank-you",  {books: books.getBooks()});
+});
 
 //404 catch-all handler (middleware)
 app.use(function(req, res, next){
