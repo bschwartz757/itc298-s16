@@ -15,6 +15,10 @@ html {
   align-content: space-around;
 }
 
+.header {
+  width: 100%;
+}
+
 .main {
   width: 100%;
   height: auto;
@@ -27,6 +31,15 @@ img {
   width: 100%;
   height: auto;
   margin: 0 auto;
+}
+
+.img-centered {
+  max-width: 35%;
+  heigth: auto;
+  margin: .75em auto;
+  padding: .25em;
+  outline: .1em solid gray;
+  outline-offset: .2em;
 }
 
 h1 {
