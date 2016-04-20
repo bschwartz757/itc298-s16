@@ -2,7 +2,7 @@
 //EXPRESS
 var express = require('express');
 var fortune = require('./lib/fortune.js');
-// var choices = require('./lib/books.js')
+// var books = require('./lib/books.js')
 var bodyParser = require('body-parser');
 
 var app = express();
@@ -46,12 +46,38 @@ app.get('/about', function(req, res){
   res.render('about', {fortune: fortune.getFortune()});
 });
 
+
+//SEARCH
+var books = [
+  {id: 0, title: 'mobydick', author: 'Herman Melville'},
+  {id: 1, title: 'thescarletletter', author: 'Nathaniel Hawthorne'},
+  {id: 2, title: 'greatexpectations', author: 'Charles Dickens'},
+  {id: 3, title: 'donquixote', author: 'Miguel de Cervantez'},
+  {id: 4, title: 'themerchantofvenice', author: 'William Shakespeare'}
+];
+
+// books.forEach(function(author){
+//   var result = author.id + author.title;
+//   return (result);
+// });
+
 app.get('/books', function(req, res){
   res.render('books');
 });
 
 app.post('/search', function(req, res){
-  res.redirect("/thank-you",  {books: books.getBooks()});
+  res.type('text/html');
+  var header = 'Searching for: ' + req.body.search_title;
+  // res.render("/books-results",  {books: books.getBooks()});
+  var result = books.find(function(item){
+    return item.title === req.body.search_title;
+  });
+
+  if(result) {
+    res.send(header + "\tAuthor " + result.author);
+  } else {
+    res.send(header + "\tSorry, Title Not Found");
+  }
 });
 
 //404 catch-all handler (middleware)
