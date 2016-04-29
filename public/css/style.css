@@ -55,3 +55,23 @@ h4 {
   margin: 1.25em 0;
   align-self: flex-start;
 }
+
+.search-form {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 30%;
+  align-self: flex-start;
+}
+
+label, input {
+  display: block;
+  margin: .75em 0;
+}
