@@ -24,7 +24,7 @@ html {
   height: auto;
   margin: 0 auto;
   padding: 1.25em;
-  background-color: rgba(82, 9, 187, 0.8);
+  background-color:rgb(111, 51, 82);
 }
 
 img {
@@ -74,4 +74,20 @@ h4 {
 label, input {
   display: block;
   margin: .75em 0;
+}
+
+.links {
+  display: block;
+  list-style-type: none;
+}
+
+.link-internal {
+  text-decoration: none;
+  font-family:monospace;
+  font-size: 1.2em;
+  color:rgb(231, 241, 154);
+}
+
+.link-internal:hover {
+  color:rgb(93, 177, 238);
 }
