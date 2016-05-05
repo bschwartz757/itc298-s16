@@ -31,13 +31,16 @@ app.get('/headers', function(req, res){
 
 //home/about routes
 app.get('/', function(req, res){
-  res.render('home');
+  res.render('home', {book: book.getAll()});
 });
+
+app.get('/detail/:title', function(req, res){
+  res.type('text/html');
+  res.render('detail', {book: book.get(req.params.title)})
+});
+
 app.get('/about', function(req, res){
   res.render('about', {fortune: fortune.getFortune()});
-});
-app.get('/books', function(req, res){
-  res.render('books');
 });
 
 app.post('/search', function(req, res){
@@ -45,7 +48,7 @@ app.post('/search', function(req, res){
   var header = 'Searching for: ' + req.body.title;
   var result = book.get(req.body.title);
   if(result) {
-    res.render('books-results', {book: "Here is the book you requested: " + result.title + " by " + result.author + ". There are " + result.length + " items in our collection."});
+    res.render('detail', {book: "Here is the book you requested: " + result.title + " by " + result.author + ". There are " + result.length + " items in our collection."});
    } else {
     // res.status(404).render('404');
     res.send(header + "\tSorry, Title Not Found");
@@ -57,9 +60,9 @@ app.post('/add', function(req, res){
   var result = book.add(req.body.title);
   // console.log(result);
   if(result.updated) {
-    res.render('books-results', {book: req.body.title + " is already in the system. There are " + result.length + " items in our collection."});
+    res.render('detail', {book: req.body.title + " is already in the system. There are " + result.length + " items in our collection."});
   } else {
-    res.render('books-results', {book: "Thanks for adding " + req.body.title + " to the system. There are " + result.length + " items in our collection."});
+    res.render('detail', {book: "Thanks for adding " + req.body.title + " to the system. There are " + result.length + " items in our collection."});
   }
 });
 
@@ -67,9 +70,9 @@ app.post('/delete', function(req, res){
   res.type('text/html');
   var result = book.delete(req.body.title);
   if(result.deleted) {
-    res.render('books-results', {book: req.body.title + " has been removed from the system. There are now " + result.length + " items in our collection."});
+    res.render('detail', {book: req.body.title + " has been removed from the system. There are now " + result.length + " items in our collection."});
   } else {
-    res.render('books-results', {book: req.body.title + " was not found in our system. There are " + result.length + " items in our collection."});
+    res.render('detail', {book: req.body.title + " was not found in our system. There are " + result.length + " items in our collection."});
   }
 });
 

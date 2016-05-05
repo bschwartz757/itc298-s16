@@ -9,25 +9,22 @@
         </ul> -->
         {{#each books}}
         <ul>
-          <li class="links"><a class="link-internal" href="/books">{{title}}</a></li>
-        </ul>
-        <ul>
-          <li class="links"><a class="link-internal" href="/books">{{author}}</a></li>
+          <li class="links"><a class="link-internal" onclick="javascript:editBook(this);">
+          {{title}}</a>By {{author}}</li>
         </ul>
         {{/each}}
       <div class="search">
         <h3>Or, Search For A Title Here:</h3>
-        <form class="search-form" action="search" method="POST">
+        <form class="search-form" action="/search" method="POST">
           <div class="search-input">
-            <label for="title">Enter a Title:</label>
+            <label for="title">Enter a Book Title:</label>
             <input type="text" id="title" class="form-control" placeholder="title" name="title" />
             <!-- <label for="author">Enter an Author:</label>
             <input type="text" id="id" class="form-control" placeholder="id" name="id" /> -->
             <button>Search</button>
-            <button>{{#if book}}Update{{else}}Add{{/if}}</button>
-            <button>Delete</button>
           </div>
         </form>
+        <hr />
       </div>
     </div>
     <!-- <div class="col-sm-8 detail">
