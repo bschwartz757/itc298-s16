@@ -12,9 +12,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 //set up handlebars view engine
 var handlebars = require('express-handlebars')
-  .create({defaultLayout:'main'});
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
+  .create({defaultLayout:'main', extname: '.hbs'});
+app.engine('hbs', handlebars.engine);
+app.set('view engine', 'hbs');
 
 app.set('port', process.env.PORT || 3000);
 

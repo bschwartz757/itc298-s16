@@ -7,10 +7,10 @@
         <div class="search-input">
           <label for="title">Enter a Title:</label>
           <input type="text" id="title" class="form-control" placeholder="title" name="title" />
-          <label for="author">Enter an Author:</label>
-          <input type="text" id="id" class="form-control" placeholder="id" name="id" />
+          <!-- <label for="author">Enter an Author:</label>
+          <input type="text" id="id" class="form-control" placeholder="id" name="id" /> -->
           <button>Search</button>
-          <button>Add</button>
+          <button>{{#if book}}Update{{else}}Add{{/if}}</button>
           <button>Delete</button>
         </div>
       </form>

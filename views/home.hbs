@@ -1,0 +1,62 @@
+<div class="wrapper">
+  <div class="col-sm-12 main container">
+    <!-- <h4>Congratulations! You made it home.</h4> -->
+    <div class="col-sm-12 master">
+      <h1>Home Base</h1>
+      <h2>Choose From A Title Below:</h2>
+        <!-- <ul>
+          <li class="links"><a class="link-internal" href="/books">Link to our Book Search App</a></li>
+        </ul> -->
+        {{#each books}}
+        <ul>
+          <li class="links"><a class="link-internal" href="/books">{{title}}</a></li>
+        </ul>
+        <ul>
+          <li class="links"><a class="link-internal" href="/books">{{author}}</a></li>
+        </ul>
+        {{/each}}
+      <div class="search">
+        <h3>Or, Search For A Title Here:</h3>
+        <form class="search-form" action="search" method="POST">
+          <div class="search-input">
+            <label for="title">Enter a Title:</label>
+            <input type="text" id="title" class="form-control" placeholder="title" name="title" />
+            <!-- <label for="author">Enter an Author:</label>
+            <input type="text" id="id" class="form-control" placeholder="id" name="id" /> -->
+            <button>Search</button>
+            <button>{{#if book}}Update{{else}}Add{{/if}}</button>
+            <button>Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- <div class="col-sm-8 detail">
+      <h2>Someday, a detail view will live here.</h2> -->
+      <!-- {{#each books}}
+      <h2>Book Title</h2>
+      <div class="col-sm-6 book-thumbnail">
+        {{#if bookImg}}
+        {{! If we have a thumbnail img, show it, otherwise show a placeholder}}
+        <img src="{{bookImg}}" alt="Book View" />
+          <span class="caption">Caption</span>
+        {{else}}
+        <div class="placeholder">
+          <p>
+            We don't have an image for that title yet.
+          </p>
+        </div>
+        {{/if}}
+        <hr />
+        <div class="thumbnail-text">
+          <p>
+            Here's some content for the title requested. Lorem ipsum dolor sit amet, at nominati assueverit reprehendunt sea, in eam perpetua sententiae quaerendum, sed vide modus bonorum no. Et vim liber quidam eligendi, est ex purto periculis constituto.
+          </p>
+        </div>
+      </div>
+      {{/each}} -->
+    </div>
+  </div>
+  <footer class="flex-container">
+      <span class="copyright">This site and it's contents are &copy; Blake Schwartz, 2016</span>
+  </footer>
+</div>

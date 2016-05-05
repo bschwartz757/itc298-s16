@@ -5,7 +5,7 @@ html {
   font-family: garamond;
   font-weight: 300;
   line-height: 1.2 rem;
-  color: rgb(236, 232, 235);
+  color:rgb(64, 64, 64);
 }
 
 .flex-container {
@@ -24,7 +24,25 @@ html {
   height: auto;
   margin: 0 auto;
   padding: 1.25em;
-  background-color:rgb(111, 51, 82);
+  border: 1px solid lightgrey;
+  background-color:rgb(233, 243, 255);
+}
+
+div.main > div {
+  border: 1px solid lightgrey;
+
+}
+
+footer {
+  width: 100%;
+  height: auto;
+  border: 1px solid lightgrey;
+  background-color:rgb(31, 38, 46);
+}
+
+.copyright {
+  color: rgb(225, 231, 241);
+  line-height: 3em;
 }
 
 img {
@@ -85,9 +103,9 @@ label, input {
   text-decoration: none;
   font-family:monospace;
   font-size: 1.2em;
-  color:rgb(231, 241, 154);
+  color:rgb(85, 96, 231);
 }
 
 .link-internal:hover {
-  color:rgb(93, 177, 238);
+  color:rgb(177, 45, 223);
 }
