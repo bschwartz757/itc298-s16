@@ -10,6 +10,19 @@
     <header>
     </header>
     {{{body}}}
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous">
+    </script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var buttons = $('button');
+
+          buttons.on('click', function(){
+            var $this = $(this);
+            $("form").attr("action", "/" + $this.text().toLowerCase());
+          });
+      });
+
+    </script>
   </body>
 </html>

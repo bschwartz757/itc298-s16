@@ -2,27 +2,36 @@
   <div class="main">
     <h2>Thanks for using our app!</h2>
     {{#if book}}
-    <div class="book-details">
-      <h3>You Requested: {{book.title}} by {{book.author}}</h3>
-      <a class="link-internal" href="/">Home</a>
-    </div>
+    {{! A nested if/else statement... pretty cool! }}
+      {{#if result}}
+          <h3>Thank you for updating {{book.title}}. There are now {{book.length}} items in our collection.</h3>
+        {{else}}
+        <div class="book-details">
+          <h3>You Requested: {{book.title}} by {{book.author}}</h3>
+          <a class="link-internal" href="/">Home</a>
+        </div>
+      {{/if}}
     {{else}}
-    <div class="placeholder">
-      <h4>We don't have an image for that title yet.</h4>
-    </div>
-    {{/if}}
-
-    <form class="search-form" action="/add" method="POST">
-      <div class="search-input">
-        <label for="title">Enter a Title:</label>
-        <input type="text" name="title" class="form-control" value="{{book.title}}" placeholder="title" />
-        <!-- <label for="author">Enter an Author:</label>
-        <input type="text" id="id" class="form-control" placeholder="id" name="id" /> -->
-        <!-- <button>Search</button> -->
-        <button>{{#if book}}Update{{else}}Add{{/if}}</button>
-        <button>Delete</button>
+      <div class="placeholder">
+        <h4>We don't have an image for that title yet.</h4>
       </div>
-    </form>
+    {{/if}}
+    {{#if result.deleted}}
+      <h3>{{book.title}} has been deleted from our system. We now have {{book.length}} items in our collection.</h3>
+      {{else}}
+      <form class="search-form" action="/add" method="POST">
+        <div class="search-input">
+          <label for="title">Enter an ID:</label>
+          <input type="text" name="id" class="form-control" value="{{book.id}}" placeholder="id" />
+          <label for="title">Enter a Title:</label>
+          <input type="text" name="title" class="form-control" value="{{book.title}}" placeholder="title" />
+          <label for="author">Enter an Author:</label>
+          <input type="text" name="author" class="form-control" value="{{book.author}}" placeholder="title" />
+          <button>{{#if book}}Update{{else}}Add{{/if}}</button>
+          <button>Delete</button>
+        </div>
+      </form>
+    {{/if}}
   </div>
   <footer class="flex-container">
       <span class="copyright">This site and it's contents are &copy; Blake Schwartz, 2016</span>
