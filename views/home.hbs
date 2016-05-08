@@ -7,15 +7,15 @@
         {{#each books}}
         <ul>
           <li class="links"><a class="link-internal" href="/detail/{{title}}">
-          {{title}}</a>By {{author}}</li>
+          {{title}}</a> By {{author}}</li>
         </ul>
         {{/each}}
       <div class="search">
         <h3>Or, Search For A Title Here:</h3>
-        <form class="search-form" action="/detail" method="POST">
+        <form class="search-form" action="/search" method="POST">
           <div class="search-input">
             <label for="title">Enter a Book Title:</label>
-            <input type="text" id="title" class="form-control" placeholder="title" name="title" />
+            <input type="text" name="title" class="form-control" placeholder="title" required />
             <button>Search</button>
           </div>
         </form>

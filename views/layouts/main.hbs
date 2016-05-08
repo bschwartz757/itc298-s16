@@ -16,11 +16,12 @@
     <script type="text/javascript">
       $(document).ready(function(){
         var buttons = $('button');
-
-          buttons.on('click', function(){
-            var $this = $(this);
-            $("form").attr("action", "/" + $this.text().toLowerCase());
-          });
+        buttons.on('click', function(){
+          var $this = $(this);
+          if (action == 'update') { action = 'add'; }
+          console.log(action);          
+          $("form").attr("action", "/" + $this.text().toLowerCase());
+        });
       });
 
     </script>

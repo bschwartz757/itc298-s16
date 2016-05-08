@@ -32,9 +32,6 @@ app.get('/headers', function(req, res){
 app.get('/', function(req, res){
   res.render('home', {books: book.getAll()});
 });
-app.get('/about', function(req, res){
-  res.render('about');
-});
 
 app.post('/detail', function(req, res){
   res.type('text/html');
@@ -51,9 +48,9 @@ app.post('/search', function(req, res){
   var header = 'Searching for: ' + req.body.title;
   var result = book.get(req.body.title);
   if(result) {
-    res.render('detail', {book: result});
+    res.render('detail', {book: "Here is the book you requested: " + result.title + " by " + result.author + ". There are " + result.length + " items in our collection."});
    } else {
-    res.render('detail' + "\tSorry, Title Not Found");
+    res.send(header + "\tSorry, Title Not Found");
   }
 });
 
@@ -61,7 +58,7 @@ app.post('/add', function(req, res){
   res.type('text/html');
   var newBook = {"id": req.body.id, "title": req.body.title, "author": req.body.author};
   var result = book.add(newBook);
-  res.render('detail', {book: result});
+  res.render('detail', {book: newBook, result: result});
 });
 
 app.post('/delete', function(req, res){

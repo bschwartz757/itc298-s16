@@ -1,7 +1,6 @@
 
 //EXPRESS
 var express = require('express');
-var fortune = require('./lib/fortune.js');
 var book = require('./lib/book.js')
 var bodyParser = require('body-parser');
 
@@ -11,10 +10,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
 //set up handlebars view engine
-var handlebars = require('express-handlebars')
-  .create({defaultLayout:'main'});
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
+var handlebars =
+require('express-handlebars')
+  .create({defaultLayout:'main', extname: '.hbs'});
+app.engine('hbs', handlebars.engine);
+app.set('view engine', 'hbs');
 
 app.set('port', process.env.PORT || 3000);
 
@@ -34,77 +34,35 @@ app.get('/', function(req, res){
   res.render('home');
 });
 app.get('/about', function(req, res){
-  res.render('about', {fortune: fortune.getFortune()});
-});
-app.get('/books', function(req, res){
-  res.render('books');
+  res.render('about');
 });
 
 app.post('/search', function(req, res){
-  res.type('text/html');
-  var header = 'Searching for: ' + req.body.title;
-  var result = book.get(req.body.title);
-  if(result) {
-    res.render('books-results', {book: "Here is the book you requested: " + result.title + " by " + result.author + ". There are " + result.length + " items in our collection."});
-   } else {
-    // res.status(404).render('404');
-    res.send(header + "\tSorry, Title Not Found");
-  }
+res.type('text/html');
+var header = 'Searching for: ' + req.body.title;
+var result = book.get(req.body.title);
+res.render('detail', {book: result});
 });
 
 app.post('/add', function(req, res){
   res.type('text/html');
-  var result = book.add(req.body.title);
-  // console.log(result);
-  if(result.updated) {
-    res.render('books-results', {book: req.body.title + " is already in the system. There are " + result.length + " items in our collection."});
+  var newBook = {"id": req.body.id, "title": req.body.title, "author": req.body.author};
+  var result = book.add(newBook);
+  if (result.added){
+    res.send("Added: " + req.body.title);
   } else {
-    res.render('books-results', {book: "Thanks for adding " + req.body.title + " to the system. There are " + result.length + " items in our collection."});
+    res.send("Updated: " + req.body.title);
   }
 });
 
 app.post('/delete', function(req, res){
   res.type('text/html');
-  var result = book.delete(req.body.title);
-  if(result.deleted) {
-    res.render('books-results', {book: req.body.title + " has been removed from the system. There are now " + result.length + " items in our collection."});
+  if(result.deleted){
+    res.send(header + {result: book.delete(req.body.title)});
   } else {
-    res.render('books-results', {book: req.body.title + " was not found in our system. There are " + result.length + " items in our collection."});
+    res.send(req.body.title + " was not found.");
   }
 });
-
-// app.put('/search/put', function(req, res){
-//   res.type('text/html');
-//   var result = book.getBook(req.body.search_title);
-//   if(result) {
-//     res.render('books-results', {"Thanks, " + book: result.title + " has been updated.");
-//   }
-// });
-
-// app.post('/api/search/:id', function(req, res){
-//   var result = books.forEach(function(item){
-//     if(item.title === title){
-//       return this.item;
-//     }
-// });
-// });
-
-// app.put('/api/search/:id', function(req, res){
-//   var x = books.filter(function(x){
-//     return x.id === req.params.id
-//   })[0];
-//   if(x){
-//     if(req.query.name){
-//       x.title = req.query.title;
-//       res.json({success: true});
-//     };
-//   }
-//   res.render('books');
-// });
-
-// app.delete('api/search/:id', function(req, res){
-//   res.render('books');
-// });
 
 //404 catch-all handler (middleware)
 app.use(function(req, res, next){
