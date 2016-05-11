@@ -9,6 +9,9 @@
   <body>
     <header>
     </header>
+    <div class="home-link">
+      <a href="/"></a>
+    </div>
     {{{body}}}
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous">
     </script>
@@ -18,10 +21,11 @@
         var buttons = $('button');
         buttons.on('click', function(){
           var $this = $(this);
-          if (action == 'update') { action = 'add'; }
-          console.log(action);          
-          $("form").attr("action", "/" + $this.text().toLowerCase());
+          var action = $this.text().toLowerCase();
+          if (action == 'update') {action = 'add'};
+          $("form").attr("action", "/" + action);
         });
+
       });
 
     </script>

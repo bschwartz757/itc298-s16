@@ -4,21 +4,21 @@
     {{#if book}}
     {{! A nested if/else statement... pretty cool! }}
       {{#if result}}
-          <h3>Thank you for updating {{book.title}}. There are now {{book.length}} items in our collection.</h3>
+          <h3>Thank you for updating {{book.title}}. There are now {{result.length}} items in our collection.</h3>
         {{else}}
         <div class="book-details">
-          <h3>You Requested: {{book.title}} by {{book.author}}</h3>
+          <h3>You Requested: {{book.title}}. We don't have that title yet.</h3>
           <a class="link-internal" href="/">Home</a>
         </div>
       {{/if}}
     {{else}}
-      <div class="placeholder">
+      <!-- <div class="placeholder">
         <h4>We don't have an image for that title yet.</h4>
-      </div>
+      </div> -->
     {{/if}}
     {{#if result.deleted}}
       <h3>{{book.title}} has been deleted from our system. We now have {{book.length}} items in our collection.</h3>
-      {{else}}
+    {{/if}}
       <form class="search-form" action="/add" method="POST">
         <div class="search-input">
           <label for="title">Enter an ID:</label>
@@ -31,7 +31,6 @@
           <button>Delete</button>
         </div>
       </form>
-    {{/if}}
   </div>
   <footer class="flex-container">
       <span class="copyright">This site and it's contents are &copy; Blake Schwartz, 2016</span>
