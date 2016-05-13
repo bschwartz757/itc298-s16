@@ -82,7 +82,12 @@ app.post('/add', function(req, res){
 
 app.post('/delete', function(req, res){
   res.type('text/html');
+  var result = book.delete(req.body.title);
+  if(deleted){
     res.render('detail', {result: book.delete(req.body.title)});
+  } else {
+    res.render('detail', {result: books.length})
+  }
 });
 
 //404 catch-all handler (middleware)
