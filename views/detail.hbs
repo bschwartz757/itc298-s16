@@ -3,23 +3,23 @@
     <h2>Thanks for using our app!</h2>
     {{! loop through the results and display the appropriate results }}
       {{#if result.action}}
-        {{#if ../book.delete}}
+        {{#if book.found}}
           <div class="book-details">
-            <h3>Deleted - {{book.title}}</h3>
+            <h3>Edit - {{book.title}}</h3>
             {{> home-link}}
           </div>
-        {{else}}
-        <div class="book-details">
-          <h3>{{result.action}} - {{book.title}}</h3>
-          {{> home-link}}
-        </div>
         {{/if}}
-      {{else if book.title}}
-        <div class="book-details">
-          <h3>Edit - {{book.title}}</h3>
-          {{> home-link}}
-        </div>
-      {{/if}}
+          {{else if book.delete}}
+            <div class="book-details">
+              <h3>Deleted - {{book.title}}</h3>
+              {{> home-link}}
+            </div>
+          {{else}}
+          <div class="book-details">
+            <h3>{{result.action}} - {{book.title}}</h3>
+            {{> home-link}}
+          </div>
+          {{/if}}
       {{#if book.title}}
         <form class="search-form" action="/add" method="POST">
           <div class="search-input">

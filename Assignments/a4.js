@@ -28,45 +28,45 @@ app.get('/headers', function(req, res){
   res.send(s);
 });
 
-//home/about routes
+// home/about routes
 app.get('/', function(req, res){
   res.render('home', {books: book.getAll()});
-});
-app.get('/about', function(req, res){
-  res.render('about');
-});
-
-app.post('/detail', function(req, res){
-  res.type('text/html');
-  res.render('detail', {book: book.get(req.body.title)})
 });
 
 app.get('/detail/:title', function(req, res){
   res.type('text/html');
-  res.render('detail', {book: book.get(req.params.title)})
+  var found = book.get(req.params.title);
+  if(!found) {
+    found = {title: req.params.title};
+  }
+  res.render('detail', {book: found});
+});
+
+app.get('/about', function(req, res){
+  res.type('text/html');
+  res.render('about');
 });
 
 app.post('/search', function(req, res){
   res.type('text/html');
-  var header = 'Searching for: ' + req.body.title;
-  var result = book.get(req.body.title);
-  if(result) {
-    res.render('detail', {book: result});
-   } else {
-    res.render('detail' + "\tSorry, Title Not Found");
-  }
+  var found = book.get(req.body.title);
+  if(found) {
+    found = {title: req.body.title};
+   }
+    res.render('detail', {book: found});
 });
 
 app.post('/add', function(req, res){
   res.type('text/html');
   var newBook = {"id": req.body.id, "title": req.body.title, "author": req.body.author};
   var result = book.add(newBook);
-  res.render('detail', {book: result});
+  res.render('detail', {book: newBook, result: result});
 });
 
 app.post('/delete', function(req, res){
   res.type('text/html');
-    res.render('detail', {result: book.delete(req.body.title)});
+  var result = book.delete(req.body.title);
+  res.render('detail', {result: book.delete(req.body.title)});
 });
 
 //404 catch-all handler (middleware)

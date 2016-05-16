@@ -50,7 +50,7 @@ app.get('/about', function(req, res){
 app.post('/search', function(req, res){
   res.type('text/html');
   var found = book.get(req.body.title);
-  if(!found) {
+  if(found) {
     found = {title: req.body.title};
    }
     res.render('detail', {book: found});
