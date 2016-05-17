@@ -1,8 +1,8 @@
 <div class="flex-container">
   <div class="main">
     <h2>Thanks for using our app!</h2>
-    {{! loop through the results and display the appropriate results }}
       {{#if result.action}}
+      {{! Show different messages depending on results }}
         {{#if book.found}}
           <div class="book-details">
             <h3>Edit - {{book.title}}</h3>
