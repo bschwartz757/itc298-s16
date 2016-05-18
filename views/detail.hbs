@@ -1,25 +1,29 @@
 <div class="flex-container">
   <div class="main">
     <h2>Thanks for using our app!</h2>
-      {{#if result.action}}
+      {{!#each book.title}}
+      {{!#if result.action}}
       {{! Show different messages depending on results }}
-        {{#if book.found}}
+
+        {{#if book.isNew}}
+          <div class="book-details">
+            <h3>{{result.action}} - {{book.title}}</h3>
+            {{> home-link}}
+          </div>
+        {{else}}
           <div class="book-details">
             <h3>Edit - {{book.title}}</h3>
             {{> home-link}}
           </div>
         {{/if}}
-          {{else if book.delete}}
-            <div class="book-details">
-              <h3>Deleted - {{book.title}}</h3>
-              {{> home-link}}
-            </div>
-          {{else}}
+        {{#if result.isDeleted}}
           <div class="book-details">
-            <h3>{{result.action}} - {{book.title}}</h3>
+            <h3>Deleted - {{book.title}}</h3>
             {{> home-link}}
           </div>
-          {{/if}}
+        {{/if}}
+        {{!/if}}
+      {{!/each}}
       {{#if book.title}}
         <form class="search-form" action="/add" method="POST">
           <div class="search-input">
@@ -29,7 +33,7 @@
             <input type="text" name="title" class="form-control" value="{{book.title}}" placeholder="title" />
             <label for="author">Enter an Author:</label>
             <input type="text" name="author" class="form-control" value="{{book.author}}" placeholder="title" />
-            <button>{{#if book.title}}Update{{else}}Add{{/if}}</button>
+            <button>{{#if book.isNew}}Add{{else}}Update{{/if}}</button>
             <button>Delete</button>
           </div>
         </form>
