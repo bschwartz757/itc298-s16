@@ -1,4 +1,4 @@
 # Ignore node-modules #
 .idea/
 /node_modules/
-
+/lib/credentials.js

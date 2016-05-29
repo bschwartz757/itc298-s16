@@ -8,16 +8,25 @@ app.use(require('body-parser').urlencoded({extended: true}));
 app.use('/api', require('cors')());
 
 //set up handlebars view engine
-var handlebars = require('express-handlebars')
-  .create({defaultLayout:'main', extname: '.hbs'});
+var handlebars = require('express-handlebars').create({defaultLayout:'main', extname: '.hbs',                 helpers: {
+    shortDate: function (date) {
+      if (typeof date === 'String') {date = new Date(date);}
+      var month = (date.getMonth() < 10) ? '0' + date.getMonth() : date.getMonth();
+      var day  = (date.getDate() < 10) ? '0' + date.getDate() : date.getDate();
+      return date.getFullYear() + '-' + month + '-' + day;
+    }
+  }
+});
 app.engine('hbs', handlebars.engine);
 app.set('view engine', 'hbs');
 
 var routes = require('./lib/routes.js')(app);
 
 //404 catch-all handler (middleware)
-app.use(function(req, res, next){
-  res.status(404).render('404');
+app.use(function(req, res){
+  res.type('text/plain');
+  res.status(404);
+  res.send('404 - Not Found');
 });
 
 //500 error handler (middleware)
