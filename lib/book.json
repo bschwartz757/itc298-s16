@@ -1,11 +1,11 @@
 
 //SEARCH
 var books = [
-  {title: 'moby dick', author: 'herman melville'},
-  {title: 'the scarlet letter', author: 'nathaniel hawthorne'},
-  {title: 'great expectations', author: 'charles dickens'},
-  {title: 'don quixote', author: 'miguel de cervantez'},
-  {title: 'the merchant of venice', author: 'william shakespeare'}
+  {id: 0, title: 'moby dick', author: 'herman melville'},
+  {id: 1, title: 'the scarlet letter', author: 'nathaniel hawthorne'},
+  {id: 2, title: 'great expectations', author: 'charles dickens'},
+  {id: 3, title: 'don quixote', author: 'miguel de cervantez'},
+  {id: 4, title: 'the merchant of venice', author: 'william shakespeare'}
 ];
 
 exports.get = function(title){

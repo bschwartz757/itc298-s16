@@ -1,0 +1,19 @@
+{{#if title.title}}
+  <div class="book-details">
+    <h3>Add New - {{book.title}}</h3>
+    <h1>This is the details category!</h1>
+    {{> home-link}}
+  </div>
+{{/if}}
+<form class="search-form" action="/add" method="POST">
+  <div class="search-input">
+    <input type="hidden" name="id" class="form-control" value="{{book._id}}" placeholder="id" />
+    <label for="title">Enter a Title:</label>
+    <input type="text" name="title" class="form-control" value="{{book.title}}" placeholder="title" />
+    <label for="author">Enter an Author:</label>
+    <input type="text" name="author" class="form-control" value="{{book.author}}" placeholder="title" />
+    <!-- <button>Add</button><button>Update</button> -->
+    <button>{{#if book.newBook}}Add{{else}}Update{{/if}}</button>
+    <button>Delete</button>
+  </div>
+</form>

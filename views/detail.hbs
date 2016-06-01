@@ -1,44 +1,49 @@
 <div class="flex-container">
   <div class="main">
     <h2>Thanks for using our app!</h2>
-      {{!#each book.title}}
-      {{!#if result.action}}
-      {{! Show different messages depending on results }}
-
-        {{#if book.isNew}}
+      {{! get all route }}
+        {{#if books}}
           <div class="book-details">
-            <h3>{{result.action}} - {{book.title}}</h3>
+            <h3>{{result}} - {{book.title}}</h3>
+            <h1>This is the new category!</h1>
             {{> home-link}}
           </div>
-        {{else}}
-          <div class="book-details">
-            <h3>Edit - {{book.title}}</h3>
-            {{> home-link}}
-          </div>
+        {{else if book.title}}
+          {{#if book._id}}
+            <div class="book-details">
+              <h3>Edit - {{book.title}}</h3>
+              <h1>This is the details category!</h1>
+              {{> home-link}}
+            </div>
+          {{else}}
+            <div class="book-details">
+              <h3>Add New - {{book.title}}</h3>
+              <h1>This is the details category!</h1>
+              {{> home-link}}
+            </div>
+          {{/if}}
         {{/if}}
-        {{#if result.isDeleted}}
+        <!-- {{#if result.Deleted}}
           <div class="book-details">
             <h3>Deleted - {{book.title}}</h3>
+            <h1>This is the deleted category!</h1>
             {{> home-link}}
           </div>
-        {{/if}}
-        {{!/if}}
-      {{!/each}}
+        {{/if}} -->
       {{#if book.title}}
         <form class="search-form" action="/add" method="POST">
           <div class="search-input">
-            <label for="title">Enter an ID:</label>
-            <input type="text" name="id" class="form-control" value="{{book.id}}" placeholder="id" />
+            <input type="hidden" name="id" class="form-control" value="{{book._id}}" placeholder="id" />
             <label for="title">Enter a Title:</label>
             <input type="text" name="title" class="form-control" value="{{book.title}}" placeholder="title" />
             <label for="author">Enter an Author:</label>
             <input type="text" name="author" class="form-control" value="{{book.author}}" placeholder="title" />
-            <button>{{#if book.isNew}}Add{{else}}Update{{/if}}</button>
+            <!-- <button>Add</button><button>Update</button> -->
+            <button>{{#if book.newBook}}Add{{else}}Update{{/if}}</button>
             <button>Delete</button>
           </div>
         </form>
       {{/if}}
-</div>
 <footer class="flex-container">
       <span class="copyright">This site and it's contents are &copy; Blake Schwartz, 2016</span>
   </footer>
