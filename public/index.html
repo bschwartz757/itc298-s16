@@ -10,53 +10,52 @@
     <script>
         var listApp = angular.module('listApp', []);
         listApp.controller('ListController', ['$scope', '$http', function($scope, $http) {
-            $http.get('/api/books').success(function(data) {
-                $scope.books = data;
-            }).error(function(data) {
-                console.log('Error: ' + data);
-            });
 
-            $http.get('/api/detail/:title').success(function(data) {
-                $scope.title = data;
-            }).error(function(data) {
-                console.log('Error: ' + data);
-            });
+            $http.get('/api/books')
+                .then(function successCallback(response) {
+                    $scope.books = response.data;
+                }, function errorCallback(response) {
+                    console.log('Error: ' + response.data);
+                });
 
-            $http.get('/api/search').success(function(data) {
-                $scope.title = data;
-            }).error(function(data) {
-                console.log('Error: ' + data);
-            });
-
-            $http.post('/api/delete').success(function(data) {
-                $scope.title = data;
-            }).error(function(data) {
-                console.log('Error: ' + data);
-            });
-
-            $http.post('/api/add').success(function(data) {
-                $scope.title = data;
-            }).error(function(data) {
-                console.log('Error: ' + data);
-            });
-
-            $scope.buttonText = 'Submit';
-            // $scope.myData = [
-            //   {title: 'moby dick', author: 'herman melville', price: 25.00},
-            //   {title: 'great expectations', author: 'charles dickens', price: 30.00},
-            //   {title: 'don quixote', author: 'miguel de cervantez', price: 40.00},
-            //   {title: 'the merchant of venice', author: 'william shakespeare', price: 22.00}
-            // ];
-
-            // custom methods
-            $scope.showDetail = function(book) {
-                $scope.detail = true;
-                $scope.currentBook = book;
-                // code here to update any variables referenced by the view template
+            $scope.saveBook = function() {
+              $http.post('/api/add', $scope.book)
+                  .then(function successCallback(response) {
+                      $scope.post_result = response.data.result;
+                      $scope.books.push($scope.book);
+                  }, function errorCallback(response) {
+                      console.log('Error: ' + response.data);
+                  });
             };
+
+            // $scope.deleteBook = function() {
+            //   $http.post('/api/delete')
+            //     .then(function successCallback(response) {
+            //         $scope.title = response.data;
+            //     }, function errorCallback(response) {
+            //         console.log('Error: ' + response.data);
+            //     });
+            // };
+
+            $scope.hideform = true;
+
+            $scope.showDetail = function(item) {
+                $scope.add = false;
+                $scope.hideform = (item == $scope.book) ? !$scope.hideform : false;
+                $scope.book = item;
+            };
+
+            $scope.newBook = function() {
+                $scope.add = true;
+                $scope.hideform = false;
+                $scope.book = {};
+            };
+
             $scope.resetForm = function() {
                 $scope.title = '';
             };
+
+            $scope.buttonText = 'Reset';
 
         }]);
     </script>
@@ -66,48 +65,59 @@
 
 <body ng-app="listApp">
     <div class="wrapper">
-        <div class="col-sm-12 main">
-              <div ng-controller="ListController">
+        <div ng-controller="ListController">
+            <div class="col-sm-12 main">
                 <div class="col-sm-4 panel panel-default">
                     <div class="panel-body">
-                        <h2>Search :</h2>
                         <div class="form-input">
+                            <label>Search:</label>
                             <input type="text" ng-model="title">
                         </div>
-                        <div class="display clearfix" ng-bind="title">
-                            <label>Title: {{title}}</label>
+                        <div class="display clearfix">
+                            <h5>Searching For:</h5>
+                            <p>{{title}}</p>
                             <button ng-click="resetForm()">{{buttonText}}</button>
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <ul>
-                                    <!-- <li class="links"><a class="link-internal" href="/detail/{{title}}">
-      {{title}}</a> By {{author}}</li> -->
-                                    <li ng-repeat="book in books" class="links"><a class="link-internal" ng-click="showDetail(book)">{{book.title}}</a></li>
+                                    <li ng-repeat="book in books | orderBy: 'title' | filter: title" class="links"><a class="link-internal" ng-click="showDetail(book)">{{book.title}}</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-8 panel panel-default">
-                  <div class="panel-body">
-                    <h3>Total: {{books.length}}</h3>
-                    <div ng-show="detail" class="detail">
-                      <ul>
-                        <li>
-                          <span> By {{currentBook.author}}</span>
-                        </li>
-                      </ul>
+                    <div class="panel-body">
+                        <h3>Total: {{books.length}}</h3>
+                        <button ng-click="newBook()">New</button>
+                        <div ng-show="detail" class="detail">
+                            <ul>
+                                <li>
+                                    <span>{{currentBook.title}} By {{currentBook.author}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <form ng-hide="hideform">
+                            <h3 ng-show="add">Add New:</h3>
+                            <h3 ng-hide="add">Edit Item:</h3>
+                            <h3 ng-bind="post_result"></h3>
+                            <input type="text" placeholder="title" ng-model="book.title" />
+                            <input type="text" placeholder="author" ng-model="book.author" />
+                            <input type="hidden" name="id" />
+                            <button ng-click="saveBook()">Save</button>
+                        </form>
                     </div>
-                  </div>
                 </div>
-              </div>
-          </div>
+            </div>
+        </div>
         <footer class="flex-container">
             <span class="copyright">This site and it's contents are &copy; Blake Schwartz, 2016</span>
         </footer>
     </div>
     <!-- close container -->
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous">
+    </script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </body>
 

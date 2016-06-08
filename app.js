@@ -1,10 +1,12 @@
 //EXPRESS
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
-app.use(require('body-parser').urlencoded({extended: true}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api', require('cors')());
 
 //set up handlebars view engine
@@ -31,7 +33,7 @@ app.use(function(req, res){
 
 //500 error handler (middleware)
 app.use(function(err, req, res, next){
-  console.error(err.stack);
+  // console.error(err.stack);
   res.status(500).render('500');
 });
 
