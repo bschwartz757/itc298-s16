@@ -28,14 +28,15 @@
                   });
             };
 
-            // $scope.deleteBook = function() {
-            //   $http.post('/api/delete')
-            //     .then(function successCallback(response) {
-            //         $scope.title = response.data;
-            //     }, function errorCallback(response) {
-            //         console.log('Error: ' + response.data);
-            //     });
-            // };
+            $scope.deleteBook = function() {
+              $http.post('/api/delete', $scope.book)
+                .then(function successCallback(response) {
+                    $scope.post_result = response.data.result;
+                    // console.log('35');
+                }, function errorCallback(response) {
+                    console.log('Error: ' + response.data);
+                });
+            };
 
             $scope.hideform = true;
 
@@ -50,6 +51,12 @@
                 $scope.hideform = false;
                 $scope.book = {};
             };
+
+            $scope.removeBook = function() {
+              $scope.add = false;
+              $scope.hideform = false;
+              $scope.remove = true;
+            }
 
             $scope.resetForm = function() {
                 $scope.title = '';
@@ -91,6 +98,7 @@
                     <div class="panel-body">
                         <h3>Total: {{books.length}}</h3>
                         <button ng-click="newBook()">New</button>
+                        <button ng-click="removeBook()">Remove</button>
                         <div ng-show="detail" class="detail">
                             <ul>
                                 <li>
@@ -101,11 +109,13 @@
                         <form ng-hide="hideform">
                             <h3 ng-show="add">Add New:</h3>
                             <h3 ng-hide="add">Edit Item:</h3>
+                            <h3 ng-hide="remove">Remove Item:</h3>
                             <h3 ng-bind="post_result"></h3>
                             <input type="text" placeholder="title" ng-model="book.title" />
                             <input type="text" placeholder="author" ng-model="book.author" />
                             <input type="hidden" name="id" />
                             <button ng-click="saveBook()">Save</button>
+                            <button ng-click="deleteBook()">Delete</button>
                         </form>
                     </div>
                 </div>
