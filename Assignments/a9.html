@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script>
+        var listApp = angular.module('listApp', []);
+        listApp.controller('ListController', ['$scope', '$http', function($scope, $http) {
+
+            $http.get('/api/books')
+                .then(function successCallback(response) {
+                    $scope.books = response.data;
+                }, function errorCallback(response) {
+                    console.log('Error: ' + response.data);
+                });
+
+            $scope.saveBook = function() {
+              $http.post('/api/add', $scope.book)
+                  .then(function successCallback(response) {
+                      $scope.post_result = response.data.result;
+                      $scope.books.push($scope.book);
+                  }, function errorCallback(response) {
+                      console.log('Error: ' + response.data);
+                  });
+            };
+
+            $scope.deleteBook = function() {
+              $http.post('/api/delete', $scope.book)
+                .then(function successCallback(response) {
+                    $scope.post_result = response.data.result;
+                    // console.log('35');
+                }, function errorCallback(response) {
+                    console.log('Error: ' + response.data);
+                });
+            };
+
+            $scope.hideform = true;
+
+            $scope.showDetail = function(item) {
+                $scope.add = false;
+                $scope.hideform = (item == $scope.book) ? !$scope.hideform : false;
+                $scope.book = item;
+            };
+
+            $scope.newBook = function() {
+                $scope.add = true;
+                $scope.hideform = false;
+                $scope.book = {};
+            };
+
+            $scope.removeBook = function() {
+              $scope.add = false;
+              $scope.hideform = false;
+              $scope.remove = true;
+            }
+
+            $scope.resetForm = function() {
+                $scope.title = '';
+            };
+
+            $scope.buttonText = 'Reset';
+
+        }]);
+    </script>
+</head>
+
+<!--View template. Add necessary Angular directives -->
+
+<body ng-app="listApp">
+    <div class="wrapper">
+        <div ng-controller="ListController">
+            <div class="col-sm-12 main">
+                <div class="col-sm-4 panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-input">
+                            <label>Search:</label>
+                            <input type="text" ng-model="title">
+                        </div>
+                        <div class="display clearfix">
+                            <h5>Searching For:</h5>
+                            <p>{{title}}</p>
+                            <button ng-click="resetForm()">{{buttonText}}</button>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ul>
+                                    <li ng-repeat="book in books | orderBy: 'title' | filter: title" class="links"><a class="link-internal" ng-click="showDetail(book)">{{book.title}}</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8 panel panel-default">
+                    <div class="panel-body">
+                        <h3>Total: {{books.length}}</h3>
+                        <button ng-click="newBook()">New</button>
+                        <button ng-click="removeBook()">Remove</button>
+                        <div ng-show="detail" class="detail">
+                            <ul>
+                                <li>
+                                    <span>{{currentBook.title}} By {{currentBook.author}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <form ng-hide="hideform">
+                            <h3 ng-show="add">Add New:</h3>
+                            <h3 ng-hide="add">Edit Item:</h3>
+                            <h3 ng-hide="remove">Remove Item:</h3>
+                            <h3 ng-bind="post_result"></h3>
+                            <input type="text" placeholder="title" ng-model="book.title" />
+                            <input type="text" placeholder="author" ng-model="book.author" />
+                            <input type="hidden" name="id" />
+                            <button ng-click="saveBook()">Save</button>
+                            <button ng-click="deleteBook()">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="flex-container">
+            <span class="copyright">This site and it's contents are &copy; Blake Schwartz, 2016</span>
+        </footer>
+    </div>
+    <!-- close container -->
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+
+</html>
